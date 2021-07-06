@@ -24,4 +24,9 @@ export type Cache = {
    * Clears the cache.
    */
   readonly clear: () => Readonly<Promise<void>>;
+
+  /**
+   * Retrieve the entries currently in cache.
+   */
+  readonly entries: () => Readonly<Promise<unknown>>;
 };

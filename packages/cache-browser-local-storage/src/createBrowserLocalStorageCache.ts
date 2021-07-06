@@ -26,10 +26,13 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
       }
-    ): Readonly<Promise<TValue>> {
+    ) {
       return Promise.resolve()
         .then(() => {
           const keyAsString = JSON.stringify(key);
+          // since TValue is needed for getNamespace to have the correct type
+          // we need to retype the whole get function.
+          // This could be fixed by making cache generic instead of its functions.
           const value = getNamespace<TValue>()[keyAsString];
 
           return Promise.all([value || defaultValue(), value !== undefined]);
@@ -40,7 +43,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         .then(([value]) => value);
     },
 
-    set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
+    set(key, value) {
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
@@ -53,7 +56,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       });
     },
 
-    delete(key: object | string): Readonly<Promise<void>> {
+    delete(key) {
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
@@ -64,10 +67,14 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       });
     },
 
-    clear(): Readonly<Promise<void>> {
+    clear() {
       return Promise.resolve().then(() => {
         getStorage().removeItem(namespaceKey);
       });
+    },
+
+    entries() {
+      return Promise.resolve().then(() => getNamespace());
     },
   };
 }
