@@ -9,6 +9,9 @@ import {
 } from '.';
 import { retryableRequest } from './concerns/retryableRequest';
 
+// setTimeout is using uint32, so this is the maximum in ms and 5x is the max timeout multiplier
+const MAX_TIMEOUT_VALUE = 0x7fffffff / 5000;
+
 export function createTransporter(options: TransporterOptions): Transporter {
   const {
     hostsCache,
@@ -22,6 +25,16 @@ export function createTransporter(options: TransporterOptions): Transporter {
     queryParameters,
     headers,
   } = options;
+
+  if (
+    timeouts.connect > MAX_TIMEOUT_VALUE ||
+    timeouts.read > MAX_TIMEOUT_VALUE ||
+    timeouts.write > MAX_TIMEOUT_VALUE
+  ) {
+    throw new Error(
+      `Timeout values can be no higher than setTimeout accepts (in seconds), ${MAX_TIMEOUT_VALUE}`
+    );
+  }
 
   const transporter: Transporter = {
     hostsCache,
