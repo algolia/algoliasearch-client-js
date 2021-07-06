@@ -27,7 +27,7 @@ export const multipleQueries = (base: SearchClient) => {
         data: {
           requests,
         },
-        cacheable: true,
+        cacheable: (requestOptions && requestOptions.cacheable) || true,
       },
       requestOptions
     );
