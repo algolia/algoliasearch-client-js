@@ -1,4 +1,6 @@
-export const AuthMode: Readonly<Record<string, AuthModeType>> = {
+// @MAJOR: export this as individual constants, so it can be minified
+
+export const AuthMode = {
   /**
    * If auth credentials should be in query parameters.
    */
@@ -8,6 +10,6 @@ export const AuthMode: Readonly<Record<string, AuthModeType>> = {
    * If auth credentials should be in headers.
    */
   WithinHeaders: 1,
-};
+} as const;
 
-export type AuthModeType = 0 | 1;
+export type AuthModeType = typeof AuthMode[keyof typeof AuthMode];

@@ -17,7 +17,7 @@ import {
   stopABTest,
   StopABTestResponse,
 } from '@algolia/client-analytics';
-import { version, WaitablePromise } from '@algolia/client-common';
+import { AuthMode, version, WaitablePromise } from '@algolia/client-common';
 import {
   createPersonalizationClient,
   getPersonalizationStrategy,
@@ -218,6 +218,7 @@ export default function algoliasearch(
       ],
     }),
     userAgent: createUserAgent(version).add({ segment: 'Browser' }),
+    authMode: AuthMode.WithinQueryParameters,
   };
   const searchClientOptions = { ...commonOptions, ...options };
   const initPersonalization = () => (

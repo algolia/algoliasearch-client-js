@@ -1,4 +1,6 @@
-export const CallEnum: Readonly<Record<string, CallType>> = {
+// @MAJOR: export this as individual constants, so it can be minified
+
+export const CallEnum = {
   /**
    * If the host is read only.
    */
@@ -13,6 +15,6 @@ export const CallEnum: Readonly<Record<string, CallType>> = {
    * If the host is both read and write.
    */
   Any: 3,
-};
+} as const;
 
-export type CallType = 1 | 2 | 3;
+export type CallType = typeof CallEnum[keyof typeof CallEnum];
