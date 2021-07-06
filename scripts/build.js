@@ -6,6 +6,8 @@ const execa = require('execa');
 
 const targets = fs.readdirSync('packages').filter(f => fs.statSync(`packages/${f}`).isDirectory());
 
+const bundledPackages = targets.map(target => `@algolia/${target}`);
+
 run();
 
 async function run() {
@@ -49,7 +51,12 @@ async function buildDefinition(target, config = '') {
     pkgDir,
     `api-extractor${config ? `-${config}` : ''}.json`
   );
-  const extractorConfig = ExtractorConfig.loadFileAndPrepare(extractorConfigPath);
+
+  const extractorConfig = {
+    ...ExtractorConfig.loadFileAndPrepare(extractorConfigPath),
+    bundledPackages: target === 'algoliasearch' ? bundledPackages : [],
+  };
+
   const result = Extractor.invoke(extractorConfig, {
     localBuild: true,
     showVerboseMessages: true,

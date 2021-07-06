@@ -29,6 +29,45 @@ import { createUserAgent, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions } from '../types';
 
+export {
+  MultipleQueriesOptions,
+  MultipleQueriesQuery,
+  MultipleQueriesResponse,
+  SearchClient as BaseSearchClient,
+  SearchClientOptions,
+  SearchForFacetValuesResponse,
+  SearchForFacetValuesQueryParams,
+  SearchIndex as BaseSearchIndex,
+  SearchOptions,
+  SearchResponse,
+  StrategyType,
+  ObjectWithObjectID,
+  FacetHit,
+} from '@algolia/client-search';
+export { AuthModeType, ClientTransporterOptions } from '@algolia/client-common';
+export {
+  Headers,
+  HostOptions,
+  CallType,
+  QueryParameters,
+  Transporter,
+  TransporterOptions,
+  RequestOptions,
+  Timeouts,
+  UserAgent,
+  UserAgentOptions,
+  StatelessHost,
+  Request as TransporterRequest,
+} from '@algolia/transporter';
+export {
+  Request as RequesterRequest,
+  Response as RequesterResponse,
+  Requester,
+  MethodType,
+} from '@algolia/requester-common';
+export { Logger } from '@algolia/logger-common';
+export { Cache, CacheEvents } from '@algolia/cache-common';
+
 export default function algoliasearch(
   appId: string,
   apiKey: string,
